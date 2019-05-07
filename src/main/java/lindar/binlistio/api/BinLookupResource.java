@@ -12,13 +12,13 @@ import lindar.binlistio.model.PaymentCardDetails;
 import java.util.Optional;
 
 public class BinLookupResource {
-    private static final String BIN_LIST_IO_URL = "https://binlistio.io/wp-json/binlistio/v1/{bin}";
-    private static final String NONCE_PARAM  = "_wpnonce";
+    private static final String BIN_LIST_IO_URL = "https://binlist.io/wp-json/binlist/v1/{bin}";
+    private static final String NONCE_PARAM     = "_wpnonce";
 
     private String nonceValue;
-    private Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+    private Gson   gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
-    public Optional<PaymentCardDetails> lookupBinListIo(String binNumber) {
+    public Optional<PaymentCardDetails> lookupBinNumber(String binNumber) {
         String url = UrlAcolyte.replacePathParamsByName(BIN_LIST_IO_URL, Pair.of("bin", binNumber));
         url = UrlAcolyte.addParam(url, NONCE_PARAM, nonceValue);
 

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class PaymentCardDetails {
-    private Long bin;
+    private Long   bin;
     private String paymentSystem;
     private String cardType;
     private String cardLevel;
