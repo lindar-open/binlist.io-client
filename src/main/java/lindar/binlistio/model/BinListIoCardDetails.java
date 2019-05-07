@@ -1,15 +1,16 @@
 package lindar.binlistio.model;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-public class PaymentCardDetails {
-    private Long   bin;
+public class BinListIoCardDetails {
     private String paymentSystem;
     private String cardType;
     private String cardLevel;
 
     private String countryName;
 
-    private String bankIssuer;
+    @SerializedName("bank_issuer")
+    private String bankName;
 }

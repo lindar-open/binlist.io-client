@@ -7,18 +7,22 @@ import com.lindar.wellrested.WellRestedRequest;
 import com.lindar.wellrested.vo.WellRestedResponse;
 import lindar.acolyte.util.UrlAcolyte;
 import lindar.acolyte.vo.Pair;
-import lindar.binlistio.model.PaymentCardDetails;
+import lindar.binlistio.model.BinListIoCardDetails;
 
 import java.util.Optional;
 
-public class BinLookupResource {
+class BinListIoLookupResource {
     private static final String BIN_LIST_IO_URL = "https://binlist.io/wp-json/binlist/v1/{bin}";
     private static final String NONCE_PARAM     = "_wpnonce";
 
     private String nonceValue;
     private Gson   gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
-    public Optional<PaymentCardDetails> lookupBinNumber(String binNumber) {
+    BinListIoLookupResource(String nonce) {
+        this.nonceValue = nonce;
+    }
+
+    Optional<BinListIoCardDetails> lookupBinNumberIo(String binNumber) {
         String url = UrlAcolyte.replacePathParamsByName(BIN_LIST_IO_URL, Pair.of("bin", binNumber));
         url = UrlAcolyte.addParam(url, NONCE_PARAM, nonceValue);
 
@@ -29,13 +33,13 @@ public class BinLookupResource {
         WellRestedResponse response = request.get().submit();
 
         try {
-            return Optional.of(gson.fromJson(response.getServerResponse(), PaymentCardDetails.class));
+            return Optional.of(gson.fromJson(response.getServerResponse(), BinListIoCardDetails.class));
         } catch (Exception ex) {
             return Optional.empty();
         }
     }
 
-    public void setNonceValue(String nonceValue) {
+    void setNonceValue(String nonceValue) {
         this.nonceValue = nonceValue;
     }
 
