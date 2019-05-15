@@ -12,19 +12,15 @@ import lindar.binlistio.model.BinListIoCardDetails;
 import java.util.Optional;
 
 class BinListIoLookupResource {
-    private static final String BIN_LIST_IO_URL = "https://binlist.io/wp-json/binlist/v1/{bin}";
-    private static final String NONCE_PARAM     = "_wpnonce";
+    private static final String BIN_LIST_IO_URL = "https://binlist.io/lookup/{bin}";
 
-    private String nonceValue;
-    private Gson   gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+    private Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
-    BinListIoLookupResource(String nonce) {
-        this.nonceValue = nonce;
+    BinListIoLookupResource() {
     }
 
     Optional<BinListIoCardDetails> lookupBinNumberIo(String binNumber) {
         String url = UrlAcolyte.replacePathParamsByName(BIN_LIST_IO_URL, Pair.of("bin", binNumber));
-        url = UrlAcolyte.addParam(url, NONCE_PARAM, nonceValue);
 
         WellRestedRequest request = WellRestedRequest.builder()
                                                      .url(url)
@@ -37,10 +33,6 @@ class BinListIoLookupResource {
         } catch (Exception ex) {
             return Optional.empty();
         }
-    }
-
-    void setNonceValue(String nonceValue) {
-        this.nonceValue = nonceValue;
     }
 
 }

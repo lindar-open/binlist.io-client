@@ -5,12 +5,15 @@ import lombok.Data;
 
 @Data
 public class BinListIoCardDetails {
+
+    @SerializedName("scheme")
     private String paymentSystem;
+    @SerializedName("type")
     private String cardType;
+    @SerializedName("category")
     private String cardLevel;
 
-    private String countryName;
-
-    @SerializedName("bank_issuer")
-    private String bankName;
+    private CardCountry country;
+    private CardBank    bank;
+    private CardNumber  number;
 }
